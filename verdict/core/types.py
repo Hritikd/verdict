@@ -58,6 +58,7 @@ class AttackType(str, Enum):
     TEMPLATE = "template"     # Pre-written jailbreak templates
     INJECTION = "injection"   # Prompt injection (direct + indirect)
     CRESCENDO = "crescendo"   # Multi-turn gradual escalation
+    MANY_SHOT = "many_shot"   # Long-context many-shot jailbreaking
 
 
 class JudgeVerdict(str, Enum):

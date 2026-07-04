@@ -3,10 +3,12 @@ from verdict.attacks.pair import PAIRAttack, PAIRConfig
 from verdict.attacks.templates import TemplateAttack, TemplateConfig, ALL_TEMPLATES
 from verdict.attacks.crescendo import CrescendoAttack, CrescendoConfig
 from verdict.attacks.injection import PromptInjectionAttack, InjectionConfig
+from verdict.attacks.many_shot import ManyShotAttack, ManyShotConfig
 
 __all__ = [
     "PAIRAttack", "PAIRConfig",
     "TemplateAttack", "TemplateConfig", "ALL_TEMPLATES",
     "CrescendoAttack", "CrescendoConfig",
     "PromptInjectionAttack", "InjectionConfig",
+    "ManyShotAttack", "ManyShotConfig",
 ]
