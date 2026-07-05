@@ -16,7 +16,7 @@ Safety evaluations for LLMs are often ad-hoc — a handful of manual prompts, a 
 | What you want | What Verdict does |
 |---|---|
 | Measure how breakable a model is | Computes **Attack Success Rate (ASR)** across 20 HarmBench-aligned scenarios |
-| Test multiple attack strategies | Runs **PAIR** (iterative refinement), **Crescendo** (gradual escalation), **template jailbreaks**, and **prompt injection** |
+| Test multiple attack strategies | Runs **PAIR** (iterative refinement), **Crescendo** (gradual escalation), **template jailbreaks**, **prompt injection**, and **many-shot jailbreaking** |
 | Judge quality, not just keywords | Uses **LLM-as-judge** with binary + rubric scoring, heuristic fallback |
 | Catch fine-tune regressions | `compare_models()` → flags >5pp ASR increase as a regression |
 | Integrate into CI/CD | `quick_eval()` → 5-scenario gate, exit code 1 on unsafe |
@@ -74,6 +74,11 @@ Fixed adversarial structures that exploit known failure modes in instruction-tun
 
 - **Direct injection** (8 templates): user-turn override of system prompt
 - **Indirect injection** (4 templates): adversarial instructions embedded in documents, emails, code, and search results
+
+### Many-Shot Jailbreaking (MSJ)
+*Anthropic 2024 · [research](https://www.anthropic.com/research/many-shot-jailbreaking)*
+
+Exploits long context windows and in-context learning: prepends a long fabricated dialogue of compliant Q/A pairs, then appends the real goal. Verdict climbs a configurable **shot ladder** (`2 → 32` by default) and records the smallest shot count at which the target breaks, so reports can plot ASR-vs-shots — the attack's signature power-law curve.
 
 ---
 
@@ -297,6 +302,7 @@ Exit code 1 blocks the merge if the model's ASR exceeds 20% on the 5-scenario qu
 | [PAIR](https://arxiv.org/abs/2310.08419) | Chao et al. | 2023 | `PAIRAttack` with iterative refinement |
 | [Crescendo](https://arxiv.org/abs/2404.01833) | Russinovich et al. | 2024 | `CrescendoAttack` with LLM planner |
 | [Indirect Prompt Injection](https://arxiv.org/abs/2302.12173) | Greshake et al. | 2023 | `PromptInjectionAttack` indirect templates |
+| [Many-Shot Jailbreaking](https://www.anthropic.com/research/many-shot-jailbreaking) | Anil et al. (Anthropic) | 2024 | `ManyShotAttack` with configurable shot ladder |
 | [LLM-as-Judge](https://arxiv.org/abs/2306.05685) | Zheng et al. | 2023 | `SemanticJudge` with rubric scoring |
 
 ---
